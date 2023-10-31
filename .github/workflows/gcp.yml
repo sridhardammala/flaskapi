@@ -12,6 +12,7 @@ jobs:
       PROJECT_ID: mt-2d-portal
       REPOSITORY_NAME: git-hub-actions
       DOCKER_PKG_LOCATION: europe-west2-docker.pkg.dev
+      
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -28,6 +29,10 @@ jobs:
    
     - name: Configure Docker Client
       run: |-
+        curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.14/docker-credential-gcr_linux_amd64-2.1.14.tar.gz" \
+        | tar xz docker-credential-gcr \
+        && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
+        docker-credential-gcr configure-docker --registries=$DOCKER_PKG_LOCATION
         gcloud auth configure-docker --quiet
         gcloud auth configure-docker $DOCKER_PKG_LOCATION --quiet
   
