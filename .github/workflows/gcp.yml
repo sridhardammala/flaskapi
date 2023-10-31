@@ -45,5 +45,6 @@ jobs:
       #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}
       run: |-
         gcloud auth configure-docker europe-west2-docker.pkg.dev
+        docker-credential-gcr configure-docker europe-west2-docker.pkg.dev
         docker build -t europe-west2-docker.pkg.dev/mt-2d-portal/git-hub-actions/flaskapi:latest .
         docker push europe-west2-docker.pkg.dev/mt-2d-portal/git-hub-actions/flaskapi:latest
