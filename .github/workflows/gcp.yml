@@ -35,6 +35,7 @@ jobs:
         docker-credential-gcr configure-docker --registries=$DOCKER_PKG_LOCATION
         gcloud auth configure-docker --quiet
         gcloud auth configure-docker $DOCKER_PKG_LOCATION --quiet
+        gcloud auth print-access-token | sudo docker login -u oauth2accesstoken --password-stdin https://europe-west2-docker.pkg.dev
   
     - name: Push Docker Image to Artifact Registry
       run: |-
