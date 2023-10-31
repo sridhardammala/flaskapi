@@ -42,7 +42,7 @@ jobs:
   
     - name: Push Docker Image to Artifact Registry
       # env: 
-      #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}
+      #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}  
       run: |-
         gcloud auth configure-docker europe-west2-docker.pkg.dev
         docker build -t europe-west2-docker.pkg.dev/mt-2d-portal/git-hub-actions/flaskapi:latest .
