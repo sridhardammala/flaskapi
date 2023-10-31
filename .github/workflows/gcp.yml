@@ -30,8 +30,6 @@ jobs:
       run: |-
         gcloud auth configure-docker --quiet
         gcloud auth configure-docker $DOCKER_PKG_LOCATION --quiet
-        docker-credential-gcr version 
-
   
     - name: Push Docker Image to Artifact Registry
       run: |-
