@@ -28,7 +28,7 @@ def download_file_from_gcs():
         bucket = client.get_bucket(bucket_name)
         blob = bucket.blob(file_name)
         # Download the file to a temporary directory within the pod
-        local_temp_destination = f'tmp/{file_name}'  # Temporary storage within the pod
+        local_temp_destination = f'/tmp/{file_name}'  # Temporary storage within the pod
         # Ensure the directory structure exists
         os.makedirs(os.path.dirname(local_temp_destination), exist_ok=True)
         print(f'Downloading the file {file_name} to {local_temp_destination}')
