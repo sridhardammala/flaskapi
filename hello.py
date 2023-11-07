@@ -14,6 +14,7 @@ def hello_world():
 
 @app.route('/download_file_from_gcs', methods=['POST'])
 def download_file_from_gcs():
+    print(" I am in download_file_from_gcs")
     try:
         print(" I am in download_file_from_gcs")
         json_data = request.json
