@@ -55,6 +55,6 @@ jobs:
       #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}   --build-arg MY_ENV_VAR=value_to_pass -t my-image-name .
       run: |-
         gcloud auth configure-docker europe-west4-docker.pkg.dev
-        docker  buildx build --build-arg GCP_SERVICE_ACCOUNT_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t europe-west4-docker.pkg.dev/mt-2d-portal/github-artifcats/flaskapi:latest .
+        docker  build -t europe-west4-docker.pkg.dev/mt-2d-portal/github-artifcats/flaskapi:latest .
         credential helper - run: | gcloud auth configure-docker -q
         docker push europe-west4-docker.pkg.dev/mt-2d-portal/github-artifcats/flaskapi:latest
