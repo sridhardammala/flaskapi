@@ -28,19 +28,19 @@ def download_file_from_gcs():
         bucket = client.get_bucket(bucket_name)
         blob = bucket.blob(file_name)
         # Download the file to a temporary directory within the pod
-        local_temp_destination = f'/tmp/{file_name}'  # Temporary storage within the pod
+        local_temp_destination = f'/app/data/{file_name}'  # Temporary storage within the pod
         # Ensure the directory structure exists
         os.makedirs(os.path.dirname(local_temp_destination), exist_ok=True)
         print(f'Downloading the file {file_name} to {local_temp_destination}')
         blob.download_to_filename(local_temp_destination)
-        # # Move the file to the PVC mount path
-        pvc_mount_path = '/app/data'  # PVC mount path in the container
-        local_pvc_destination = os.path.join(pvc_mount_path, file_name)
-        # Ensure the directory structure exists
-        os.makedirs(os.path.dirname(local_pvc_destination), exist_ok=True)
-        os.rename(local_temp_destination, local_pvc_destination)
+        # # # Move the file to the PVC mount path
+        # pvc_mount_path = '/app/data'  # PVC mount path in the container
+        # local_pvc_destination = os.path.join(pvc_mount_path, file_name)
+        # # Ensure the directory structure exists
+        # os.makedirs(os.path.dirname(local_pvc_destination), exist_ok=True)
+        # os.rename(local_temp_destination, local_pvc_destination)
 
-        return jsonify({"message": f"File '{file_name}' downloaded to PVC at '{local_pvc_destination}' successfully."})
+        return jsonify({"message": f"File '{file_name}' downloaded to PVC at '{local_temp_destination}' successfully."})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -1,6 +1,7 @@
 FROM python:3.7
 
 RUN mkdir /app
+RUN mkdir /app/data
 WORKDIR /app
 ADD . /app/
 ENV PYTHONUNBUFFERED=1
