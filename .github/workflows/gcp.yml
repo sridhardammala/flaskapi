@@ -25,7 +25,7 @@ jobs:
    
     - name: Push Docker Image to Artifact Registry
       # env: 
-      #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}   --build-arg MY_ENV_VAR=value_to_pass -t my-image-name . 
+      #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}    
       run: |-
         gcloud auth configure-docker ${{ env.PROJECT_ID }}
         docker  build -t ${{ env.DOCKER_PKG_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:latest .
