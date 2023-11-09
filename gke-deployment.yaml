@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      # serviceAccountName: mm-ml-service-account
+      volumes:
+        - name: flask-vol
+          persistentVolumeClaim:
+            claimName: flask-pvc
+        - name: flask-point-cloud-mt-key
+          secret:
+            secretName: secret-point-cloud-mt-sa-key
+      nodeSelector:
+        node-pool: pool-16-64-500
+      containers:
+      - name: flask-app
+        image: europe-west2-docker.pkg.dev/point-cloud-mt/github-actions/flaskapi:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:    
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/point-cloud-mt-sa-keys.json
+        volumeMounts:
+        - name: flask-point-cloud-mt-key
+          mountPath: /var/secrets/google
+        - name: flask-vol
+          mountPath: "/app/data"                  
+      imagePullSecrets:
+      - name: point-cloud-mt-europe-west2
+      
+

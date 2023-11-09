@@ -17,11 +17,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # - id: 'auth'
-    - name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0.4.0'
+    - name: install the gcloud cli
+      uses: google-github-actions/setup-gcloud@v0
       with:
-        credentials_json: '${{ secrets.POINT_CLOUD_MT_SA_KEY}}'  
+        project_id: point-cloud-mt
+        service_account_key: ${{ secrets.POINT_CLOUD_MT_SA_KEY }}
+        install_components: 'gke-gcloud-auth-plugin'
+        export_default_credentials: true  
+
+    # - id: 'auth'
+    # - name: 'Authenticate to Google Cloud'
+    #   uses: 'google-github-actions/auth@v0.4.0'
+    #   with:
+    #     credentials_json: '${{ secrets.POINT_CLOUD_MT_SA_KEY}}'  
    
     - name: Push Docker Image to Artifact Registry
       # env: 
@@ -31,7 +39,10 @@ jobs:
         docker  build -t europe-west2-docker.pkg.dev/point-cloud-mt/github-actions/flaskapi:latest .
         credential helper - run: | gcloud auth configure-docker -q
         docker push europe-west2-docker.pkg.dev/point-cloud-mt/github-actions/flaskapi:latest 
-        
+    - name: deploy to gke      
+      run: |
+        gcloud container clusters get-credentials cluster-1 --region europe-west2        
+        kubectl apply -f gke-deployment.yaml    
 
   # gcloud auth configure-docker ${{ env.PROJECT_ID }}
   # docker  build -t ${{ env.DOCKER_PKG_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:latest .
