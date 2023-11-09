@@ -41,7 +41,7 @@ jobs:
         docker push europe-west2-docker.pkg.dev/point-cloud-mt/github-actions/flaskapi:latest 
     - name: deploy to gke      
       run: |
-        gcloud container clusters get-credentials cluster-1 --region europe-west2        
+        gcloud container clusters get-credentials cluster-1 --zone europe-west2-b      
         kubectl apply -f gke-deployment.yaml    
 
   # gcloud auth configure-docker ${{ env.PROJECT_ID }}
