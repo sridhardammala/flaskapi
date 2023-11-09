@@ -27,11 +27,16 @@ jobs:
       # env: 
       #   GOOGLE_PROJECT=${{ env.PROJECT_ID }}    
       run: |-
-        gcloud auth configure-docker ${{ env.PROJECT_ID }}
-        docker  build -t ${{ env.DOCKER_PKG_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:latest .
+        gcloud auth configure-docker europe-west2-docker.pkg.dev
+        docker  build -t europe-west2-docker.pkg.dev/point-cloud-mt/github-actions/flaskapi:latest .
         credential helper - run: | gcloud auth configure-docker -q
-        docker push ${{ env.DOCKER_PKG_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:latest
+        docker push europe-west2-docker.pkg.dev/point-cloud-mt/github-actions/flaskapi:latest 
+        
 
+  # gcloud auth configure-docker ${{ env.PROJECT_ID }}
+  # docker  build -t ${{ env.DOCKER_PKG_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:latest .
+  # credential helper - run: | gcloud auth configure-docker -q
+  # docker push ${{ env.DOCKER_PKG_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.IMAGE_NAME }}:latest
 
  # - name: install the gcloud CLI
     #   uses: google-github-actions/setup-gcloud@main 
